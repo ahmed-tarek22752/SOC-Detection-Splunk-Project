@@ -1,2 +1,2 @@
-# Enterprise-SOC-Detection-FrameWork-Splunk-Project-
-ffffffffffffffffffffffffffffffffffffffff
+# 
+-SOC-Detection-FrameWork-Splunk-Project
