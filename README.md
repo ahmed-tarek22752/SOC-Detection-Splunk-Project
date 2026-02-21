@@ -1,2 +1,2 @@
 # 
--SOC-Detection-FrameWork-Splunk-Project
+SOC-Detection-FrameWork-Splunk-Project
