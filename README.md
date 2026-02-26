@@ -24,7 +24,7 @@ All execution evidence (screenshots) is stored in:
 
 ![Architecture Diagram](ev0.jpg)
 
-🏗️ Environment
+🏗️ **Environment**
 
 - SIEM: Splunk Enterprise
 - Dataset: BOTS v3
@@ -39,13 +39,14 @@ All execution evidence (screenshots) is stored in:
 
 ## 🧠 **Technology Stack**
 
-| Component           | Purpose                               |
-| ------------------- | ------------------------------------- |
-| **LimaCharlie EDR** | Detection, telemetry, isolation API   |
-| **Tines SOAR**      | Automation, workflows, triage prompts |
-| **Slack**           | Alerting & SOC communication          |
-| **Email Alerts**    | Executive notifications               |
-| **Windows Host**    | Target endpoint with LC sensor        |
+49️⃣ Procdump Execution
+Spl
+Copy code
+index=botsv3 EventCode=4688 New_Process_Name="*procdump.exe*"
+50️⃣ Mimikatz Indicator
+Spl
+Copy code
+index=botsv3 Command_Line="*mimikatz*"
 
 ---
 
