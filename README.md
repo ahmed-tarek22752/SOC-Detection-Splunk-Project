@@ -24,14 +24,16 @@ All execution evidence (screenshots) is stored in:
 
 ![Architecture Diagram](ev0.jpg)
 
-This workflow provides:
+🏗️ Environment
 
-* ✔ Detection of malicious tool execution
-* ✔ Auto‑forwarding to Tines
-* ✔ Slack alerting
-* ✔ Analyst confirmation prompt
-* ✔ Automatic isolation of infected system
-* ✔ Full visibility & audit trail
+- SIEM: Splunk Enterprise
+- Dataset: BOTS v3
+- Log Sources:
+  - Windows Security Logs
+  - Sysmon
+  - DNS Logs
+  - Web Logs
+  - Endpoint Logs
 
 ---
 
