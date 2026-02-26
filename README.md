@@ -39,17 +39,38 @@ All execution evidence (screenshots) is stored in:
 
 ## 🧠 **Technology Stack**
 
+
+
 ## 1️⃣ Brute Force – Single Account
 
 
 ```bash
-Spl
-Copy code
+
 index=botsv3 EventCode=4625 earliest=-5m
 | stats count by Account_Name src_ip
 | where count > 15 
 
 ```
+## 2️⃣ Password Spray (Single IP → Many Accounts)
+
+
+```bash
+
+index=botsv3 EventCode=4625 earliest=-5m
+| stats dc(Account_Name) as unique_users count by src_ip
+| where unique_users > 15
+
+```
+
+
+
+
+
+
+
+
+
+
 
 ---
 
