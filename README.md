@@ -190,6 +190,106 @@ index=botsv3 EventCode=4624 earliest=-24h
 
 ```
 
+## 1️⃣8️⃣ High Risk Users
+
+```bash
+
+index=botsv3 
+| eval risk_score=case(
+    EventCode=4625,30,
+    EventCode=4672,60,
+    EventCode=4688 AND like(Command_Line,"%lsass%"),80,
+    EventCode=7045,70,
+    1=1,0
+)
+| stats sum(risk_score) as risk by Account_Name
+| where risk > 0
+| search NOT Account_Name IN ("SYSTEM","NETWORK SERVICE","LOCAL SERVICE","DWM-1")
+| sort -risk
+| head 10
+
+```
+
+## 1️⃣9️⃣ Admin Access Attempts
+
+```bash
+
+index=botsv3 sourcetype=stream:http uri_path="/admin*"
+| eval Result=case(
+    status=200,"SUCCESS",
+    status=401 OR status=403,"BLOCKED",
+    status=404,"NOT_FOUND",
+    status=500 OR status=503,"SERVER_ERROR",
+    1=1,"OTHER")
+| stats count by Result
+
+```
+## 2️⃣0️⃣ Power Shell Execution BY User
+
+```bash
+
+index=botsv3 EventCode=4688 New_Process_Name="*powershell*"
+| stats count by Account_Name
+
+```
+## 2️⃣1️⃣ Suspicious Process Creation
+
+```bash
+
+index=botsv3 EventCode=4688
+| eval ProcessName=lower(mvindex(split(New_Process_Name,"\\"),-1))
+| stats count as ExecutionCount by ProcessName
+| sort -ExecutionCount
+| head 10
+
+```
+## 2️⃣2️⃣ Web Enumeration Activity
+
+```bash
+
+index=botsv3 sourcetype=stream:http status=404
+| stats count by dest_ip | sort -count
+| head 10
+
+```
+## 2️⃣3️⃣ Privileged Account Activity (Non-System) 
+
+```bash
+
+index=botsv3 EventCode=4672
+| where NOT match(Account_Name,"^(SYSTEM|LOCAL SERVICE|NETWORK SERVICE|DWM-)")
+| stats count as privilege_events by Account_Name, ComputerName
+| sort -privilege_events
+| head 10
+
+```
+
+## 2️⃣4️⃣ Administrative Group Changes
+
+```bash
+
+index=botsv3 EventCode=4728 OR EventCode=4732
+| table _time Account_Name
+
+```
+## 2️⃣5️⃣ Total Risk Score 
+
+```bash
+
+index=botsv3
+| eval risk_score=case(
+    EventCode=4625,30,
+    EventCode=4672,60,
+    EventCode=4688 AND like(Command_Line,"%lsass%"),80,
+    EventCode=7045,70,
+    sourcetype="stream:http" AND bytes_out>10000000,90,
+    1=1,0
+)
+| stats sum(risk_score) as risk by Account_Name
+| stats sum(risk) as "Total Risk Score"
+
+```
+## 2️⃣6️⃣ 
 
 
 
@@ -208,11 +308,17 @@ index=botsv3 EventCode=4624 earliest=-24h
 
 
 
-1️⃣5️⃣
-1️⃣6️⃣
-1️⃣7️⃣
-1️⃣8️⃣
-1️⃣9️⃣
+
+
+
+
+
+
+
+
+
+
+
 2️⃣0️⃣
 
 
