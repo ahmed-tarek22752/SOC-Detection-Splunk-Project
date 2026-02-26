@@ -39,10 +39,15 @@ All execution evidence (screenshots) is stored in:
 
 ## 🧠 **Technology Stack**
 
-## User Data and Game Sales with Server Health Annotations
+## 1️⃣ Brute Force – Single Account
+
 
 ```bash
-index=webapp sourcetype=app_monitoring | eval annotation_label = message | eval annotation_color = case(message="INFO maintenance operation", "#75C5F0", message="CRITICAL security issue", "#FF4747", message="WARNING network issue", "#F3CC17") 
+Spl
+Copy code
+index=botsv3 EventCode=4625 earliest=-5m
+| stats count by Account_Name src_ip
+| where count > 15 
 
 ```
 
