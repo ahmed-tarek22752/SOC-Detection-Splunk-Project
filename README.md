@@ -61,6 +61,161 @@ index=botsv3 EventCode=4625 earliest=-5m
 | where unique_users > 15
 
 ```
+## 3️⃣ Brute Force Followed by Success
+
+
+```bash
+
+index=botsv3 (EventCode=4625 OR EventCode=4624) earliest=-10m
+| stats 
+    count(eval(EventCode=4625)) as failures
+    count(eval(EventCode=4624)) as success
+    by Account_Name src_ip
+| where failures > 10 AND success > 0
+
+```
+## 4️⃣ Account Lockout Spike
+
+
+```bash
+
+index=botsv3 EventCode=4740 earliest=-10m
+| stats count by Account_Name
+| where count > 3
+
+```
+## 5️⃣ User Added to Local Admin Group
+
+
+```bash
+
+index=botsv3 EventCode=4732
+| search Group_Name="*Administrators*"
+
+```
+
+## 6️⃣ Domain Admin Group Modification
+
+
+```bash
+
+index=botsv3 EventCode=4728
+| search Group_Name="*Domain Admins*"
+
+```
+
+## 8️⃣ Special Privileges Assigned (4672)
+
+```bash
+
+index=botsv3 EventCode=4672
+| search Account_Name!="SYSTEM"
+
+```
+## 9️⃣ New Account Creation
+
+```bash
+
+index=botsv3 EventCode=4720
+
+```
+## 🔟 Service Installation
+
+```bash
+
+index=botsv3 EventCode=7045
+
+```
+## 1️⃣1️⃣ Scheduled Task Creation
+
+```bash
+
+index=botsv3 EventCode=7045
+
+```
+
+## 1️⃣2️⃣ RDP Logon Spike
+
+
+
+## 1️⃣3️⃣ Lateral Movement
+
+
+```bash
+
+index=botsv3 EventCode=4624 Logon_Type=3
+| stats dc(ComputerName) as hosts by Account_Name
+| where hosts > 4
+
+```
+## 1️⃣4️⃣ DNS High Volume
+
+```bash
+
+index=botsv3 sourcetype=stream:dns earliest=-5m
+| stats count by src_ip
+| where count > 300
+
+```
+## 1️⃣5️⃣ Rare Domain Contact
+
+```bash
+
+index=botsv3 sourcetype=stream:dns
+| stats count by query
+| where count < 5
+
+```
+## 1️⃣6️⃣ NTLM Spike Attempts 
+
+```bash
+
+index=botsv3 EventCode=4776 earliest=-5m
+| stats count dc(Account_Name) as users by src_ip
+| where count > 30 AND users > 10
+
+```
+## 1️⃣7️⃣ Multiple IP Login Per Account 
+
+```bash
+
+index=botsv3 EventCode=4624 earliest=-24h
+| stats dc(src_ip) as ips by Account_Name
+| where ips > 5
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1️⃣5️⃣
+1️⃣6️⃣
+1️⃣7️⃣
+1️⃣8️⃣
+1️⃣9️⃣
+2️⃣0️⃣
+
+
+
+
+
+
+
 
 
 
@@ -75,6 +230,8 @@ index=botsv3 EventCode=4625 earliest=-5m
 ---
 
 ## 🎯 **Use Case: Detecting LaZagne Execution**
+
+Domain Admin Group Modification
 
 The detection rule identifies:
 
