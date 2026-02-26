@@ -135,8 +135,13 @@ index=botsv3 EventCode=7045
 ```
 
 ## 1️⃣2️⃣ RDP Logon Spike
+```bash
 
+index=botsv3 EventCode=4624 Logon_Type=10 earliest=-10m
+| stats count by src_ip
+| where count > 15
 
+```
 
 ## 1️⃣3️⃣ Lateral Movement
 
