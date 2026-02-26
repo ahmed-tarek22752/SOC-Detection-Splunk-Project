@@ -39,14 +39,12 @@ All execution evidence (screenshots) is stored in:
 
 ## 🧠 **Technology Stack**
 
-49️⃣ Procdump Execution
-Spl
-Copy code
-index=botsv3 EventCode=4688 New_Process_Name="*procdump.exe*"
-50️⃣ Mimikatz Indicator
-Spl
-Copy code
-index=botsv3 Command_Line="*mimikatz*"
+## User Data and Game Sales with Server Health Annotations
+
+```bash
+index=webapp sourcetype=app_monitoring | eval annotation_label = message | eval annotation_color = case(message="INFO maintenance operation", "#75C5F0", message="CRITICAL security issue", "#FF4747", message="WARNING network issue", "#F3CC17") 
+
+```
 
 ---
 
