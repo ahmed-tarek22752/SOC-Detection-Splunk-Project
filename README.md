@@ -289,7 +289,92 @@ index=botsv3
 | stats sum(risk) as "Total Risk Score"
 
 ```
-## 2️⃣6️⃣ 
+## 2️⃣6️⃣ Total 100% CPU Events
+
+
+```bash
+
+index=botsv3 sourcetype="perfmonmk:process" "%_Processor_Time"=100
+| stats count
+
+```
+
+## 2️⃣7️⃣ AWS IAM Activity
+
+```bash
+
+	index=botsv3 sourcetype=aws:cloudtrail | search eventName=AttachUserPolicy OR eventName=CreateAccessKey OR eventName=DeleteUser OR eventName=ConsoleLogin
+
+
+```
+## 2️⃣8️⃣ AWS API WithOut MFA 
+
+```bash
+
+index=botsv3 sourcetype="aws:cloudtrail"
+userIdentity.type=IAMUser
+userIdentity.sessionContext.attributes.mfaAuthenticated=false
+| stats count by userIdentity.userName eventName sourceIPAddress
+| sort -count
+
+```
+## 2️⃣9️⃣ Public S3 Bucket Count
+
+```bash
+
+index=botsv3 sourcetype="aws:cloudtrail"
+eventName=PutBucketAcl
+requestParameters.AccessControlPolicy.AccessControlList.Grant{}.Grantee.URI="http://acs.amazonaws.com/groups/global/AllUsers"
+| stats count
+
+```
+## 3️⃣0️⃣ Service Installation on System
+
+
+```bash
+
+index=botsv3 EventCode=7045
+| table _time Service_Name 
+
+```
+## 3️⃣1️⃣ High SMTP Activity
+
+```bash
+
+index=botsv3 sourcetype=stream:smtp 
+| stats count by src_ip | where count > 5
+| sort -count 
+
+```
+
+## 3️⃣2️⃣ High CPU Process Activity
+
+```bash
+
+index=botsv3 sourcetype="perfmonmk:process" "%_Processor_Time"=100
+| stats count by host instance
+| sort -count
+
+```
+## 3️⃣3️⃣ Potential Data Exfilteration (HTTP Outilers) 
+
+```bash
+index=botsv3 sourcetype=stream:http 
+| stats sum(bytes_out) as total_out by src_ip
+| eventstats perc90(total_out) as threshold
+| where total_out > threshold
+| sort -total_out
+
+```
+## 3️⃣4️⃣ Lateral Movement Attempts 
+
+```bash
+
+index=botsv3 (EventCode=4624 OR EventCode=4672) earliest=-30m
+| stats dc(ComputerName) as hosts by Account_Name
+| where hosts > 3
+
+```
 
 
 
@@ -319,7 +404,8 @@ index=botsv3
 
 
 
-2️⃣0️⃣
+
+
 
 
 
