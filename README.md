@@ -428,15 +428,23 @@ index=botsv3 (EventCode=4624 OR EventCode=4672) earliest=-30m
 
 ## 🎯 **Correlation Rules**
 
-Domain Admin Group Modification
-
-The detection rule identifies:
-
-* Process name & file path containing `LaZagne`
-* Command line arguments
-* OS being Windows
-
-Once detected → event is immediately sent to **Tines**.
+🔴 1️⃣ `Brute Force → Successful Login → Privilege Assigned`
+Attack Pattern:
+Password guessing → success → admin privileges
+Spl
+Copy code
+index=botsv3 (EventCode=4625 OR EventCode=4624 OR EventCode=4672) earliest=-15m
+| stats 
+    count(eval(EventCode=4625)) as failures
+    count(eval(EventCode=4624)) as success
+    count(eval(EventCode=4672)) as privileged
+    by Account_Name src_ip
+| where failures > 10 AND success > 0 AND privileged > 0
+🎯 Detects full compromise sequence.
+MITRE:
+T1110
+T1078
+Privilege Escalatio
 
 ### 📌 LimaCharlie Detection Rule (YAML)
 
