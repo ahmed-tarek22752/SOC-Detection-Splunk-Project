@@ -431,8 +431,8 @@ index=botsv3 (EventCode=4624 OR EventCode=4672) earliest=-30m
 🔴 1️⃣ `Brute Force → Successful Login → Privilege Assigned`
 Attack Pattern:
 Password guessing → success → admin privileges
-Spl
-Copy code
+
+``` bash
 index=botsv3 (EventCode=4625 OR EventCode=4624 OR EventCode=4672) earliest=-15m
 | stats 
     count(eval(EventCode=4625)) as failures
@@ -440,6 +440,7 @@ index=botsv3 (EventCode=4625 OR EventCode=4624 OR EventCode=4672) earliest=-15m
     count(eval(EventCode=4672)) as privileged
     by Account_Name src_ip
 | where failures > 10 AND success > 0 AND privileged > 0
+```
 🎯 Detects full compromise sequence.
 MITRE:
 T1110
