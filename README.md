@@ -445,7 +445,8 @@ index=botsv3 (EventCode=4625 OR EventCode=4624 OR EventCode=4672) earliest=-15m
 MITRE:
 T1110
 T1078
-Privilege Escalatio
+Privilege Escalation
+
 
 ### 📌 LimaCharlie Detection Rule (YAML)
 
