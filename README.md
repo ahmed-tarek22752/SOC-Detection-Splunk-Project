@@ -426,7 +426,7 @@ index=botsv3 (EventCode=4624 OR EventCode=4672) earliest=-30m
 
 ---
 
-## 🎯 **Use Case: Detecting LaZagne Execution**
+## 🎯 **Correlation Rules**
 
 Domain Admin Group Modification
 
