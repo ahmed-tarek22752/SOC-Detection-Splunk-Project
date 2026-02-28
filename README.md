@@ -441,31 +441,47 @@ index=botsv3 (EventCode=4625 OR EventCode=4624 OR EventCode=4672) earliest=-15m
     by Account_Name src_ip
 | where failures > 10 AND success > 0 AND privileged > 0
 ```
-🎯 Detects full compromise sequence.
+-Detects full compromise sequence.
 MITRE:
 T1110
 T1078
 Privilege Escalation
+*************************************************************
+🟣 2️⃣ `New User Created → Added to Admin Group`
 
+```bash
 
-### 📌 LimaCharlie Detection Rule (YAML)
+index=botsv3 (EventCode=4720 OR EventCode=4732)
+| stats 
+    count(eval(EventCode=4720)) as created
+    count(eval(EventCode=4732)) as added_to_admin
+    by Target_Account_Name
+| where created > 0 AND added_to_admin > 0
+🎯 Backdoor admin account
+MITRE:
+T1136
+T1098
 
-```yaml\ nop: and
-events:
-  - NEW_PROCESS
-rules:
-  - op: contains
-    path: event/FILE_PATH
-    value: LaZagne
-  - op: contains
-    path: event/COMMAND_LINE
-    value: LaZagne
-  - op: is
-    path: event/OS
-    value: windows
 ```
+- Backdoor admin account
+MITRE:
+T1136
+T1098
 
----
+*************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## 📡 **Slack Alerting**
 
