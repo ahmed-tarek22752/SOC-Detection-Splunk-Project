@@ -428,7 +428,8 @@ index=botsv3 (EventCode=4624 OR EventCode=4672) earliest=-30m
 
 ## 🎯 **Correlation Rules**
 
-🔴 1️⃣ `Brute Force → Successful Login → Privilege Assigned`
+🔴 1️⃣ Brute Force → Successful Login → Privilege Assigned
+
 Attack Pattern:
 Password guessing → success → admin privileges
 
@@ -447,7 +448,7 @@ T1110
 T1078
 Privilege Escalation
 ************************************************************
-🟠2️⃣ `New User Created → Added to Admin Group`
+🟠2️⃣ New User Created → Added to Admin Group
 
 ```bash
 
@@ -481,6 +482,12 @@ index=botsv3 (EventCode=4625 OR EventCode=4740) earliest=-10m
 | where fails > 20 AND locked > 0
 
 ```
+Detects a spike in failed login attempts followed by an account lockout, indicating a potential brute-force or password spraying attack.
+
+T1110 – Brute Force
+T1110.003 – Password Spraying
+
+
 ***************************************************************
 🔵 4️⃣ Recon Commands → Privilege Escalation 
 
@@ -508,19 +515,6 @@ T1543 – Create or Modify System Process (Service Creation)
 T1071 – Application Layer Protocol (C2 Communication)
 
 *****************************************************************                    
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## 📡 **Slack Alerting**
 
