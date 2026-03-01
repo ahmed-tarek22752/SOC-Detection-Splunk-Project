@@ -446,8 +446,8 @@ MITRE:
 T1110
 T1078
 Privilege Escalation
-*************************************************************
-🟣 2️⃣ `New User Created → Added to Admin Group`
+************************************************************
+🟠2️⃣ `New User Created → Added to Admin Group`
 
 ```bash
 
@@ -469,6 +469,45 @@ T1136
 T1098
 
 *************************************************************
+🟣 3️⃣ Failed Logon Spike → Account Lockout
+
+```bash
+
+
+index=botsv3 (EventCode=4625 OR EventCode=4740) earliest=-10m
+| stats count(eval(EventCode=4625)) as fails 
+        count(eval(EventCode=4740)) as locked 
+        by Account_Name
+| where fails > 20 AND locked > 0
+
+```
+***************************************************************
+🔵 4️⃣ Recon Commands → Privilege Escalation 
+
+```bash
+
+index=botsv3 EventCode=4688 earliest=-20m
+| search Command_Line="*whoami*" OR Command_Line="*net localgroup*"
+| stats count by Account_Name
+
+```
+****************************************************************
+🟡 5️⃣ Service Creation + Network Connection 
+
+```bash
+
+index=botsv3 (EventCode=7045 OR EventCode=3) earliest=-15m
+| stats values(EventCode) as events by host Account_Name
+| where mvcount(events) > 1
+
+
+```
+Detects a host where a new service was installed and a network connection occurred within 15 minutes — potentially indicating malicious persistence followed by command-and-control activity.
+
+T1543 – Create or Modify System Process (Service Creation)
+T1071 – Application Layer Protocol (C2 Communication)
+
+*****************************************************************                    
 
 
 
