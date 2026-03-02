@@ -585,4 +585,6 @@ index=cloudflare WAFAction=block
 **************************************************** 
 
 
+![Architecture Diagram](cloudflare.jpg)
+
 
