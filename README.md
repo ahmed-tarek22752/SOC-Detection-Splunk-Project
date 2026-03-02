@@ -568,7 +568,7 @@ index=cloudflare
 
 **************************************************** 
 
-5️⃣ SQL Injection Detection 
+5️⃣ **SQL Injection Detection** 
 
 ```bash
 
@@ -586,5 +586,70 @@ index=cloudflare WAFAction=block
 
 
 ![Architecture Diagram](cloudflare.jpg)
+
+****************************************************
+6️⃣ **XSS Detection** 
+
+```bash
+
+index=cloudflare WAFAction=block
+| search ClientRequestURI="*<script>*"
+        OR ClientRequestURI="*javascript:*"
+| stats count by ClientIP ClientRequestURI
+| sort -count
+
+```
+****************************************************
+7️⃣ **RCE Attempt**
+
+```bash
+
+index=cloudflare WAFAction=block
+| search ClientRequestURI="*cmd=*"
+        OR ClientRequestURI="*powershell*"
+        OR ClientRequestURI="*wget*"
+        OR ClientRequestURI="*curl http*"
+| stats count by ClientIP ClientRequestURI
+
+```
+
+****************************************************
+8️⃣ **Admin Panel Attack**
+
+```bash
+
+index=cloudflare
+| search ClientRequestURI="*/admin*" 
+        OR ClientRequestURI="*/wp-admin*"
+        OR ClientRequestURI="*/login*"
+| stats count by ClientIP ClientRequestURI WAFAction
+| sort -count
+
+```
+****************************************************
+9️⃣ **LFI Attack**
+
+```bash
+
+index=cloudflare WAFAction=block
+| search ClientRequestURI="*/etc/passwd*"
+        OR ClientRequestURI="*../*"
+| stats count by ClientIP ClientRequestURI
+
+```
+
+****************************************************
+🔟 **Blocked VS Allowed**
+
+```bash
+
+index=cloudflare WAFAction=block
+| search ClientRequestURI="*/etc/passwd*"
+        OR ClientRequestURI="*../*"
+| stats count by ClientIP ClientRequestURI
+
+```
+****************************************************
+
 
 
