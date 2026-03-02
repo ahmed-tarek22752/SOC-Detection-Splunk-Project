@@ -520,26 +520,16 @@ T1071 – Application Layer Protocol (C2 Communication)
 
 
 
-![Slack Alert](evidence/ev3.png)
 
----
+![Architecture Diagram](ev1.jpg)
 
-## 🧩 **Tines Story Workflow**
 
-This story performs:
+![Architecture Diagram](ev2.jpg)
 
-1. Receive webhook from LC
-2. Parse detection fields
-3. Send alert to Slack
-4. Prompt analyst for YES/NO isolation
-5. If YES → isolate via LC API
-6. If NO → notify Slack & close case
 
-![Tines Workflow](evidence/ev1.png)
+![Architecture Diagram](ev3.jpg)
 
-The automated analyst prompt:
 
-![Prompt](evidence/ev2.png)
 
 ---
 
