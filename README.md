@@ -1,6 +1,6 @@
 # 🔥 Splunk SOC Lab – Detection Engineering Project
 
-This project simulates a real-world **Blue Team / SOC Investigation** using **BOTS v3 dataset**
+This project simulates a real-world **Blue Team / SOC Investigation** using **BOTS v3 dataset(Windows & Sysmon) + (cloudflare +)
 
 The objective was to **analyze attacker** activity across the environment, **build detection use cases**, map them to **MITRE ATT&CK**, and **create alerts** and **dashboards** as if operating in a production SOC.
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -36,8 +36,6 @@ All execution evidence (screenshots) is stored in:
   - Endpoint Logs
 
 ---
-
-## 🧠 **Technology Stack**
 
 
 
@@ -375,55 +373,7 @@ index=botsv3 (EventCode=4624 OR EventCode=4672) earliest=-30m
 | where hosts > 3
 
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+****************************************************************************************************************************************************
 ---
 
 ## 🎯 **Correlation Rules**
@@ -546,6 +496,93 @@ T1071 – Application Layer Protocol (C2 Communication)
 
 
 ---
+## CLoudflare Logs Analysis 
+
+1️⃣ **Active Security Incidents**
+
+```bash
+index=cloudflare
+| eval severity=case(
+    WAFAction="block","critical",
+    WAFAction="challenge","high",
+    WAFAction="allow","low"
+)
+| stats count 
+        values(ClientRequestURI) 
+        values(UserAgent) 
+        max(EdgeResponseStatus) as status
+        by ClientIP severity
+| sort -count
+
+```
+****************************************************
+2️⃣ **Risk Analysis** 
+
+
+```bash
+
+index=cloudflare WAFAction=block
+| eval risk_level=case(
+    AttackScore>=90,"Critical",
+    AttackScore>=70,"High",
+    AttackScore>=40,"Medium",
+    true(),"Low"
+)
+| stats count by ClientIP risk_level
+| sort -count
+
+
+```
+****************************************************
+3️⃣ **TOP Attacking IPS**
+
+```bash
+
+index=cloudflare WAFAction=block
+| stats count avg(AttackScore) as AvgScore by ClientIP
+| sort -count
+| head 10
+
+
+```
+****************************************************
+4️⃣ **Vulnerability Scanner Detection**
+
+```bash
+index=cloudflare
+| search UserAgent="*sqlmap*" 
+        OR UserAgent="*nikto*"
+        OR UserAgent="*nmap*"
+        OR UserAgent="*curl*"
+        OR UserAgent="*masscan*"
+| stats count by ClientIP UserAgent WAFAction
+| sort -count
+
+```
+
+
+
+
+
+
+
+**************************************************** 
+
+5️⃣ SQL Injection Detection 
+
+```bash
+
+index=cloudflare WAFAction=block
+| search ClientRequestURI="*UNION*" 
+        OR ClientRequestURI="*SELECT*" 
+        OR ClientRequestURI="*OR 1=1*"
+| stats count by ClientIP ClientRequestURI WAFAction
+| sort -count
+
+
+```
+
+**************************************************** 
 
 
 
