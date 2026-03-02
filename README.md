@@ -516,16 +516,9 @@ T1071 – Application Layer Protocol (C2 Communication)
 
 *****************************************************************                    
 
-## 📡 **Slack Alerting**
+## Dashboards
 
-Tines parses the incoming LC event and sends a structured alert to Slack including:
 
-* Time of detection
-* Hostname
-* Local/External IP
-* Executed file
-* Command line used
-* Link to detection in LimaCharlie
 
 ![Slack Alert](evidence/ev3.png)
 
