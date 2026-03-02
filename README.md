@@ -547,23 +547,5 @@ T1071 – Application Layer Protocol (C2 Communication)
 
 ---
 
-##  **How to Use This Repository**
-
-**1. Clone the repo**
-
-```bash
-git clone <your-repo-url>
-```
-
-**2. Explore folders**
-
-* `/evidence` → All screenshots
-* `/rules` → LimaCharlie detection rules
-* `/tines-story` → Exported Tines JSON
-* `README.md` → Documentation
-
-
-
----
 
 
