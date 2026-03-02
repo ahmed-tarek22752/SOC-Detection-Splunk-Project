@@ -514,7 +514,7 @@ Detects a host where a new service was installed and a network connection occurr
 T1543 – Create or Modify System Process (Service Creation)
 T1071 – Application Layer Protocol (C2 Communication)
 
-*****************************************************************                    
+*************************************************************************                    
 
 ## Dashboards
 
@@ -524,70 +524,30 @@ T1071 – Application Layer Protocol (C2 Communication)
 ![Architecture Diagram](ev1.jpg)
 
 
+
 ![Architecture Diagram](ev2.jpg)
+
 
 
 ![Architecture Diagram](ev3.jpg)
 
 
 
----
+*********************************************************************************
 
-## 🛡 **Host Isolation Logic**
+## Alerts & Mapping to MITRE ATTACK
 
-If analyst selects **YES** →
 
-* Tines triggers LimaCharlie API
-* Endpoint is isolated
-* Slack receives confirmation message
+![Architecture Diagram](ev5.jpg)
 
-If **NO** →
 
-* Tines informs that machine was NOT isolated and requires investigation
+![Architecture Diagram](MITRE.jpg)
+
+
 
 ---
 
-## 🔍 **LimaCharlie Detection Evidence**
-
-Screenshot from LC showing detection details:
-
-![Detection](evidence/ev4.png)
-
-Timeline of events during LaZagne execution:
-
-![Timeline](evidence/ev5.png)
-
----
-
-## 🖥 **LimaCharlie Agent Installed Successfully**
-
-![Agent Install](evidence/ev7.png)
-
----
-
-## 🧪 **Webhook Testing in Tines**
-
-![Webhook Test](evidence/ev6.png)
-
----
-
-## 🏆 **Project Outcomes**
-
-This project demonstrates:
-
-* ✔ Real SOC automation experience
-* ✔ EDR detection engineering
-* ✔ SOAR automation building
-* ✔ Incident response workflow design
-* ✔ Practical Slack integration
-* ✔ Host isolation using API
-* ✔ End‑to‑end attack simulation handling
-
-This is the exact type of project security analysts, DFIR engineers, and SOC developers build inside real enterprises.
-
----
-
-## 🌍 **How to Use This Repository**
+##  **How to Use This Repository**
 
 **1. Clone the repo**
 
@@ -602,9 +562,7 @@ git clone <your-repo-url>
 * `/tines-story` → Exported Tines JSON
 * `README.md` → Documentation
 
-**3. Review detection logic**
-**4. Review SOAR workflow**
-**5. Rebuild your own pipeline using these steps**
+
 
 ---
 
