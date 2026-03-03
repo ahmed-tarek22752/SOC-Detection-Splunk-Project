@@ -15,8 +15,7 @@ The lab includes:
 - Incident response guidance
 - Dashboard development
 
-All execution evidence (screenshots) is stored in:
-`/evidence/`
+
 
 ---
 
