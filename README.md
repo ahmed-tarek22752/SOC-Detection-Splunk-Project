@@ -2,7 +2,7 @@
 
 This project simulates a real-world **Blue Team / SOC Investigation** using **BOTS v3 dataset(Windows | Network | Cloud | linux | Endpoint Security)Logs.Additionally(cloudflare )Logs at end of Repo**
 
-The objective was to **analyze attacker** activity across the environment, **build detection use cases**, map them to **MITRE ATT&CK**, and **create alerts** and **dashboards** as if operating in a production SOC.
+The objective was to **analyze attacker** activity across the environment, **build detection use cases**, map them to **MITRE ATT&CK**, and **create alerts** and **dashboards** as if operating in a production SOC
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 The lab includes:
 
