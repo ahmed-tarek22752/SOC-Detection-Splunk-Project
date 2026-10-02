@@ -660,6 +660,8 @@ This project uses the following datasets:
   (Sanitized sample logs used for detection engineering demonstration)
 
 Note: Due to licensing and privacy considerations, raw datasets are not included in this repository.
+****************************************************
+Designed by Ahmed Tarek Salah
 
 
 
