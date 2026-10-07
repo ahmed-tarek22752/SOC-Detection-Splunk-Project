@@ -1,4 +1,4 @@
-# 🔥 Splunk SOC Lab – Detection Engineering Project
+#  Splunk SOC Lab – Detection Engineering Project
 
 This project simulates a real-world **Blue Team / SOC Investigation** using **BOTS v3 dataset(Windows | Network | Cloud | linux | Endpoint Security)Logs.Additionally(cloudflare )Logs at end of Repo**
 
