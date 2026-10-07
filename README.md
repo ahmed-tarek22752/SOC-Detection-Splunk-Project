@@ -19,7 +19,7 @@ The lab includes:
 
 ---
 
-## 🚀 **Project Architecture**
+##  **Project Architecture**
 
 ![Architecture Diagram](ev0.jpg)
 
